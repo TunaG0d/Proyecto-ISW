@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Musical Geográfico</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="leaflet/leaflet.css" />
+
+    <link rel="stylesheet" href="styles.css?v=20261026-clean">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="app-container">
+
+        <aside class="sidebar-dual" id="sidebar-dual">
+
+            <div class="icon-rail">
+                <div class="rail-brand" title="Atlas Musical Geográfico" id="brand-logo">
+                    <i data-lucide="compass"></i>
+                </div>
+
+                <div class="rail-items">
+                    <button class="rail-btn active" data-tab="search" id="tab-btn-search">
+                        <i data-lucide="search"></i>
+                        <span class="rail-tooltip">Búsqueda por canción</span>
+                    </button>
+                    <button class="rail-btn" data-tab="map" id="tab-btn-map">
+                        <i data-lucide="map"></i>
+                        <span class="rail-tooltip">Explorador de mapa</span>
+                    </button>
+                    <button class="rail-btn" data-tab="terrain" id="tab-btn-terrain">
+                        <i data-lucide="mountain-snow"></i>
+                        <span class="rail-tooltip">Topografía y Relieve</span>
+                    </button>
+                    <button class="rail-btn" data-tab="submit" id="tab-btn-submit">
+                        <i data-lucide="plus-circle"></i>
+                        <span class="rail-tooltip">Contribuciones</span>
+                    </button>
+                    <button class="rail-btn" data-tab="admin" id="tab-btn-admin">
+                        <i data-lucide="shield-check"></i>
+                        <span class="rail-tooltip">Validador</span>
+                        <span class="rail-badge hidden" id="pending-count-badge">0</span>
+                    </button>
+                </div>
+
+                <div class="rail-footer">
+                    <button class="rail-btn" id="btn-toggle-dock" title="Mover menú a la derecha">
+                        <i data-lucide="arrow-left-right" id="toggle-dock-icon"></i>
+                        <span class="rail-tooltip" id="dock-tooltip">Mover a la derecha</span>
+                    </button>
+                    <button class="rail-btn" id="btn-toggle-expand" title="Expandir ancho">
+                        <i data-lucide="maximize-2" id="toggle-expand-icon"></i>
+                        <span class="rail-tooltip" id="expand-tooltip">Expandir ancho</span>
+                    </button>
+                    <button class="rail-btn" id="btn-toggle-sidebar" title="Ocultar / Mostrar menú lateral">
+                        <i data-lucide="panel-left-close" id="toggle-sidebar-icon"></i>
+                        <span class="rail-tooltip" id="collapse-tooltip">Alternar menú</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="category-panel" id="category-panel">
+
+                <div class="panel-section active" id="section-search">
+                    <div class="panel-header">
+                        <h2>Búsqueda por canción</h2>
+                        <p class="panel-subtitle">Explora canciones según su contexto y ubicación geográfica</p>
+                    </div>
+
+                    <div class="search-wrapper">
+                        <div class="search-bar">
+                            <i data-lucide="search" class="search-icon"></i>
+                            <input type="text" id="song-search-input" placeholder="Buscar por canción, artista o terreno..." autocomplete="off">
+                            <button id="search-clear-btn" class="search-clear-btn hidden" title="Limpiar">
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
+
+                        <div class="suggestions-dropdown hidden" id="search-suggestions"></div>
+                    </div>
+
+                    <div class="filters-carousel-wrapper">
+                        <button class="carousel-nav-btn prev hidden" id="filters-scroll-left" title="Desplazar a la izquierda">
+                            <i data-lucide="chevron-left"></i>
+                        </button>
+                        <div class="quick-filters" id="quick-terrain-filters">
+                            <button class="filter-pill active" data-filter="all">Todos</button>
+                            <button class="filter-pill" data-filter="Altiplano">Altiplano / Puna</button>
+                            <button class="filter-pill" data-filter="Cordillera">Cordillera</button>
+                            <button class="filter-pill" data-filter="Selva">Selva Amazónica</button>
+                            <button class="filter-pill" data-filter="Desierto">Desierto</button>
+                            <button class="filter-pill" data-filter="Pampa">Pampa / Pastizal</button>
+                            <button class="filter-pill" data-filter="Costa">Costa / Caribe</button>
+                            <button class="filter-pill" data-filter="Valle">Valle / Secano</button>
+                            <button class="filter-pill" data-filter="Cuenca">Cuenca / Ríos</button>
+                        </div>
+                        <button class="carousel-nav-btn next" id="filters-scroll-right" title="Desplazar a la derecha">
+                            <i data-lucide="chevron-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="song-detail-container" id="song-detail-container">
+                        <div class="empty-state">
+                            <i data-lucide="music" class="empty-icon"></i>
+                            <p>Escribe arriba o selecciona una sugerencia para volar a su punto en el mapa y explorar sus coordenadas, terreno y contexto.</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-footer-report">
+                        <button class="btn-report-issue" data-section="Búsqueda por canción">
+                            <i data-lucide="alert-circle"></i> Reportar un problema
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-section" id="section-map">
+                    <div class="panel-header">
+                        <h2>Explorador del Mapa</h2>
+                        <p class="panel-subtitle">Busca una localidad o apunta directamente sobre el mapa</p>
+                    </div>
+
+                    <div class="location-search-box">
+                        <div class="search-bar">
+                            <i data-lucide="map-pin" class="search-icon"></i>
+                            <input type="text" id="map-location-input" placeholder="Buscar localidad o ciudad (ej. Salta, Cusco, Lima)..." autocomplete="off">
+                            <button id="map-location-search-btn" class="btn-location-search" title="Buscar localidad">
+                                <i data-lucide="search"></i>
+                            </button>
+                        </div>
+                        <p class="map-hint">
+                            <i data-lucide="crosshair"></i> <em>Haz clic en cualquier punto del mapa para apuntar ahí.</em>
+                        </p>
+                    </div>
+
+                    <div class="locality-result-card" id="locality-result-card">
+                        <div class="locality-title-row">
+                            <div class="locality-icon">
+                                <i data-lucide="navigation"></i>
+                            </div>
+                            <div class="locality-name-info">
+                                <h4 id="locality-name">Punto en el mapa</h4>
+                                <span id="locality-status">Coordenadas geográficas activas</span>
+                            </div>
+                        </div>
+
+                        <div class="mini-bars-container">
+                            <div class="mini-bar mini-bar-lat">
+                                <span class="mini-bar-label"><i data-lucide="compass"></i> Latitud</span>
+                                <span class="mini-bar-value" id="map-locality-lat">-15.0000°</span>
+                                <div class="mini-bar-track">
+                                    <div class="mini-bar-fill" id="map-locality-lat-fill" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="mini-bar mini-bar-lng">
+                                <span class="mini-bar-label"><i data-lucide="globe"></i> Longitud</span>
+                                <span class="mini-bar-value" id="map-locality-lng">-60.0000°</span>
+                                <div class="mini-bar-track">
+                                    <div class="mini-bar-fill" id="map-locality-lng-fill" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="locality-songs-header">
+                        <h4>Canciones asociadas a la localidad</h4>
+                        <span class="badge approved" id="locality-songs-count">0 encontradas</span>
+                    </div>
+
+                    <div class="songs-list" id="locality-songs-list">
+
+                    </div>
+
+                    <button class="btn-outline" id="btn-map-toggle-topo" style="margin-top: 1.2rem; margin-bottom: 0.6rem;" onclick="window.openTopographyMenu && window.openTopographyMenu()">
+                        <i data-lucide="mountain-snow"></i> Ver Relieve Topográfico
+                    </button>
+
+                    <button class="btn-outline" id="btn-reset-map-view">
+                        <i data-lucide="rotate-ccw"></i> Restablecer vista de América Latina
+                    </button>
+
+                    <div class="menu-footer-report">
+                        <button class="btn-report-issue" data-section="Explorador del Mapa">
+                            <i data-lucide="alert-circle"></i> Reportar un problema
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-section" id="section-terrain">
+                    <div class="panel-header">
+                        <h2>Topografía y Relieve</h2>
+                        <p class="panel-subtitle">Visualiza curvas de nivel, altimetría y la relación entre la música y la geomorfología</p>
+                    </div>
+
+                    <div class="terrain-mode-selector">
+                        <label class="terrain-section-label">Modo Visual del Mapa y Capas Temáticas</label>
+                        <div class="map-type-buttons">
+                            <button class="map-type-btn active" data-map-mode="terrain" id="map-mode-terrain">
+                                <i data-lucide="mountain-snow"></i>
+                                <span>Relieve Topográfico</span>
+                            </button>
+                            <button class="map-type-btn" data-map-mode="biomes" id="map-mode-biomes">
+                                <i data-lucide="trees"></i>
+                                <span>Mapa de Biomas</span>
+                            </button>
+                            <button class="map-type-btn" data-map-mode="dark" id="map-mode-dark">
+                                <i data-lucide="moon"></i>
+                                <span>Modo Nocturno</span>
+                            </button>
+                            <button class="map-type-btn" data-map-mode="hybrid" id="map-mode-hybrid">
+                                <i data-lucide="satellite"></i>
+                                <span>Satelital</span>
+                            </button>
+                            <button class="map-type-btn" data-map-mode="roadmap" id="map-mode-roadmap">
+                                <i data-lucide="map"></i>
+                                <span>Estándar OSM</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="terrain-insight-card" id="terrain-insight-card">
+                        <div class="terrain-insight-header">
+                            <div class="terrain-insight-icon">
+                                <i data-lucide="mountain"></i>
+                            </div>
+                            <div>
+                                <h4 id="terrain-active-name">Cordillera y Altiplano Andino</h4>
+                                <span id="terrain-active-elevation">Elevación: 3.200 - 4.800 m.s.n.m.</span>
+                            </div>
+                        </div>
+                        <p class="terrain-insight-desc" id="terrain-active-desc">
+                            Relieve de alta montaña caracterizado por mesetas elevadas, quebradas profundas y vientos intensos. La acústica de la altura y la soledad del paisaje inspiran instrumentos de viento (sikus, zampoñas, quenas) y ritmos ceremoniales que honran a los cerros tutelares (Apus).
+                        </p>
+                        <div class="terrain-metrics-grid">
+                            <div class="terrain-metric">
+                                <span class="metric-label">Tipo de relieve</span>
+                                <span class="metric-val" id="terrain-metric-type">Alta Montaña</span>
+                            </div>
+                            <div class="terrain-metric">
+                                <span class="metric-label">Impacto acústico</span>
+                                <span class="metric-val" id="terrain-metric-acoustic">Viento y eco de valle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="terrain-presets-header">
+                        <h4>Biomas y Relieves de América Latina</h4>
+                        <span class="badge approved" id="biomes-presets-count">9 ecorregiones</span>
+                    </div>
+
+                    <div class="terrain-presets-list" id="terrain-presets-list">
+
+                    </div>
+
+                    <div class="menu-footer-report">
+                        <button class="btn-report-issue" data-section="Topografía y Relieve">
+                            <i data-lucide="alert-circle"></i> Reportar un problema
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-section" id="section-submit">
+                    <div class="panel-header">
+                        <h2>Contribuciones Pedagógicas</h2>
+                        <p class="panel-subtitle">Aporta al atlas registrando el vínculo geográfico, bioma y cultural de una canción.</p>
+                    </div>
+
+                    <form id="song-form" class="panel-form">
+                        <div class="form-group">
+                            <label for="yt-link">Enlace de YouTube (RS-02) *</label>
+                            <input type="url" id="yt-link" placeholder="https://www.youtube.com/watch?v=..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="song-title">Título de la Canción *</label>
+                            <input type="text" id="song-title" placeholder="Ej: Zamba de mi esperanza" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="song-artist">Artista o Grupo *</label>
+                            <input type="text" id="song-artist" placeholder="Ej: Jorge Cafrune" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="song-locality">Localidad o Región Territorial *</label>
+                            <input type="text" id="song-locality" placeholder="Ej: Valles Calchaquíes / Salta, Argentina" required>
+                        </div>
+
+                        <!-- Selector de Geometría MoSCoW Grupo 2: Punto, Línea o Área -->
+                        <div class="form-group">
+                            <label>Delimitación Territorial (Grupo 2 MoSCoW) *</label>
+                            <div class="geom-type-selector">
+                                <button type="button" class="geom-btn active" data-geom="point">
+                                    <i data-lucide="map-pin"></i> Punto
+                                </button>
+                                <button type="button" class="geom-btn" data-geom="line">
+                                    <i data-lucide="git-commit"></i> Línea / Río
+                                </button>
+                                <button type="button" class="geom-btn" data-geom="polygon">
+                                    <i data-lucide="hexagon"></i> Área / Cuenca
+                                </button>
+                            </div>
+                            <input type="hidden" id="song-geom-type" value="point">
+                            <small class="form-hint-text" id="geom-hint-text">
+                                Representación puntual de una ciudad, poblado o sitio específico.
+                            </small>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="song-lat">Latitud de Referencia *</label>
+                                <input type="number" step="any" id="song-lat" placeholder="-33.4489" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="song-lng">Longitud de Referencia *</label>
+                                <input type="number" step="any" id="song-lng" placeholder="-70.6693" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden" id="coords-multi-group">
+                            <label for="song-coords-multi">Coordenadas del Trazado o Polígono (JSON [[lat, lng], ...])</label>
+                            <textarea id="song-coords-multi" rows="2" placeholder="[[ -31.39, -58.01 ], [ -32.48, -58.23 ], [ -34.20, -58.35 ]]"></textarea>
+                            <small class="form-hint-text">Haz clic repetido en el mapa para añadir vértices automáticamente a la línea o polígono.</small>
+                        </div>
+
+                        <div class="form-tip">
+                            <i data-lucide="crosshair"></i>
+                            <span>Haz clic sobre el mapa para capturar las coordenadas de forma interactiva.</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="song-biome">Bioma / Ecorregión Principal *</label>
+                            <select id="song-biome" required>
+                                <option value="">Selecciona el bioma...</option>
+                                <option value="Puna y Altiplano Andino">Puna y Altiplano Andino</option>
+                                <option value="Selva Amazónica (Pluvisilva Tropical)">Selva Amazónica (Pluvisilva Tropical)</option>
+                                <option value="Desierto de Atacama y Costa Árida">Desierto de Atacama y Costa Árida</option>
+                                <option value="Pampa Húmeda y Pastizales del Plata">Pampa Húmeda y Pastizales del Plata</option>
+                                <option value="Bosque Templado Lluvioso y Canales Australes">Bosque Templado Lluvioso y Canales</option>
+                                <option value="Estepa Patagónica y Mesetas Frías">Estepa Patagónica y Mesetas Frías</option>
+                                <option value="Llanos del Orinoco (Sabana Inundable)">Llanos del Orinoco (Sabana Inundable)</option>
+                                <option value="Caribe, Depresión Momposina y Manglares">Caribe, Depresión Momposina y Manglares</option>
+                                <option value="Gran Chaco y Espinal Seco">Gran Chaco y Espinal Seco</option>
+                                <option value="Valle Central y Secano">Valle Central y Secano</option>
+                                <option value="Otro">Otro Bioma</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="song-terrain">Tipo de Terreno / Relieve</label>
+                            <input type="text" id="song-terrain" list="terrain-options" placeholder="Ej: Quebrada, Valles Calchaquíes, Altiplano...">
+                            <datalist id="terrain-options">
+                                <option value="Altiplano">
+                                <option value="Cordillera de los Andes">
+                                <option value="Costa / Litoral">
+                                <option value="Valle Central">
+                                <option value="Selva / Amazonía">
+                                <option value="Pampa / Llanura">
+                                <option value="Desierto">
+                                <option value="Patagonia / Estepa">
+                                <option value="Cuenca Fluvial">
+                                <option value="Quebrada">
+                            </datalist>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="song-tags">Etiquetas Relacionadas (Físicas y Humanas) *</label>
+                            <input type="text" id="song-tags" placeholder="Ej: Quebrada, Valles, Gaucho, Zamba, Acústica de Valle" required>
+                            <small class="form-hint-text">Separa con comas aspectos físicos (geomorfología, bioma) y humanos (instrumento, ritmo, etnia).</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="song-context">Contexto Geográfico / Cultural (RS-02) *</label>
+                            <textarea id="song-context" rows="3" placeholder="¿Cómo se relaciona esta canción con el relieve, clima, fenómenos geográficos o identidad cultural?" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="song-pedagogical">Utilidad Pedagógica (RS-02) *</label>
+                            <textarea id="song-pedagogical" rows="2" placeholder="¿Cómo puede un docente o alumno utilizar este recurso para enseñar geografía física o humana?" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="btn-submit-song">
+                            <i data-lucide="send"></i> Enviar a Moderación
+                        </button>
+                    </form>
+                    <div id="form-message" class="hidden"></div>
+
+                    <div class="menu-footer-report">
+                        <button class="btn-report-issue" data-section="Contribuciones">
+                            <i data-lucide="alert-circle"></i> Reportar un problema
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-section" id="section-admin">
+                    <div class="panel-header">
+                        <h2>Módulo de Moderación (RS-03)</h2>
+                        <p class="panel-subtitle">Valida y modera propuestas musicales antes de su publicación oficial</p>
+                    </div>
+
+                    <div class="admin-filter-bar">
+                        <button class="admin-tab-btn active" data-status="pending">
+                            Pendientes <span class="badge warning" id="admin-count-pending">0</span>
+                        </button>
+                        <button class="admin-tab-btn" data-status="approved">
+                            Aprobadas <span class="badge approved" id="admin-count-approved">0</span>
+                        </button>
+                        <button class="admin-tab-btn" data-status="rejected">
+                            Rechazadas <span class="badge danger" id="admin-count-rejected">0</span>
+                        </button>
+                        <button class="admin-tab-btn" data-status="all">
+                            Todas
+                        </button>
+                    </div>
+
+                    <div class="admin-panel-list" id="admin-cards-list">
+
+                    </div>
+
+                    <div class="menu-footer-report">
+                        <button class="btn-report-issue" data-section="Validador">
+                            <i data-lucide="alert-circle"></i> Reportar un problema
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="sidebar-resizer" id="sidebar-resizer" role="separator" aria-orientation="vertical" aria-label="Ajustar ancho del menú" title="Arrastra hacia los lados para adelgazar o ensanchar el menú (Doble clic para alternar)">
+                <div class="resizer-handle" aria-hidden="true">
+                    <svg class="resizer-arrows-svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="7 8 3 12 7 16"></polyline>
+                        <polyline points="17 8 21 12 17 16"></polyline>
+                        <line x1="12" y1="4" x2="12" y2="20"></line>
+                    </svg>
+                </div>
+                <div class="resizer-tooltip-badge" id="resizer-live-badge">Ajustar ancho</div>
+            </div>
+        </aside>
+
+        <main class="main-map-area">
+            <div id="map-container"></div>
+
+            <div class="map-floating-controls">
+                <button class="floating-map-btn" id="floating-btn-biomes" title="Alternar Capa Temática de Biomas">
+                    <i data-lucide="trees"></i>
+                    <span id="floating-biomes-text">Capa de Biomas</span>
+                </button>
+                <button class="floating-map-btn active" id="floating-btn-topo" title="Alternar Vista Topográfica de Relieve">
+                    <i data-lucide="mountain-snow"></i>
+                    <span id="floating-topo-text">Vista Topográfica</span>
+                </button>
+            </div>
+
+            <div class="map-floating-badge hidden" id="map-topo-badge">
+                <i data-lucide="mountain"></i>
+                <span id="map-topo-badge-text">Relieve Topográfico Activo</span>
+            </div>
+
+            <!-- Leyenda flotante de Biomas (Grupo 1) -->
+            <div class="biomes-floating-legend hidden" id="biomes-legend">
+                <div class="biomes-legend-header">
+                    <div class="legend-title">
+                        <i data-lucide="layers"></i>
+                        <span>Biomas y Acústica</span>
+                    </div>
+                    <button id="btn-close-biomes-legend" class="btn-legend-close">&times;</button>
+                </div>
+                <div class="biomes-legend-list" id="biomes-legend-list">
+                    <!-- Rellenado dinámicamente -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay hidden" id="report-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <i data-lucide="alert-triangle" class="modal-icon-alert"></i>
+                    <div>
+                        <h3>Reportar un Problema</h3>
+                        <p>Ayúdanos a corregir inconsistencias o fallas en el Atlas Musical</p>
+                    </div>
+                </div>
+                <button class="btn-modal-close" id="btn-close-report-modal" title="Cerrar">&times;</button>
+            </div>
+
+            <form id="report-form" class="modal-form">
+                <div class="form-group">
+                    <label for="report-section-origin">Sección donde se originó</label>
+                    <input type="text" id="report-section-origin" readonly style="opacity: 0.85;">
+                </div>
+
+                <div class="form-group">
+                    <label for="report-issue-type">Tipo de problema *</label>
+                    <select id="report-issue-type" required>
+                        <option value="Ubicación o coordenadas inexactas">Ubicación o coordenadas inexactas</option>
+                        <option value="Enlace de YouTube no disponible / caído">Enlace de YouTube no disponible / caído</option>
+                        <option value="Contexto geográfico o cultural con error">Contexto geográfico o cultural con error</option>
+                        <option value="Error visual o técnico en el mapa">Error visual o técnico en el mapa</option>
+                        <option value="Sugerencia o propuesta">Sugerencia o propuesta</option>
+                        <option value="Otro motivo">Otro motivo</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="report-description">Descripción detallada *</label>
+                    <textarea id="report-description" rows="3" placeholder="Describe qué ocurrió, el título de la canción afectada o qué debería corregirse..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="report-contact">Correo electrónico (Opcional)</label>
+                    <input type="email" id="report-contact" placeholder="tu@correo.com">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal-secondary" id="btn-cancel-report">Cancelar</button>
+                    <button type="submit" class="btn-primary" style="margin: 0;">
+                        <i data-lucide="send"></i> Enviar Reporte
+                    </button>
+                </div>
+            </form>
+
+            <div id="report-feedback" class="hidden"></div>
+        </div>
+    </div>
+
+    <script src="leaflet/leaflet.js"></script>
+
+    <script src="app.js?v=20261026-clean"></script>
+</body>
+
+</html>

@@ -1,0 +1,277 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "biome-amazon",
+        "name": "Selva Amazónica (Pluvisilva Tropical)",
+        "code": "AMZ",
+        "color": "#10B981",
+        "climate": "Cálido y húmedo (Ecuatorial / Af)",
+        "altitude": "0 - 500 m.s.n.m.",
+        "acoustic": "Densa amortiguación sonora por follaje continuo; predominio de frecuencias medias-altas (aves, insectos, agua) y resonancia de maderas huecas.",
+        "instruments": "Manguaré, flautas de carrizo, maracas de semillas, tambores de tronco vaciado, sonajas de uñas de tapir.",
+        "musical_tradition": "Cantos chamánicos, icaros curativos, cumbia amazónica (chicha), ritmos de trance y conexión con espíritus de la selva.",
+        "representative_countries": "Brasil, Perú, Colombia, Bolivia, Ecuador, Venezuela"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-79.0, 2.0],
+            [-73.0, 4.0],
+            [-65.0, 6.0],
+            [-59.0, 7.0],
+            [-51.0, 2.0],
+            [-48.0, -1.0],
+            [-46.0, -5.0],
+            [-50.0, -12.0],
+            [-60.0, -15.0],
+            [-66.0, -14.0],
+            [-70.0, -11.0],
+            [-75.0, -6.0],
+            [-78.0, -3.0],
+            [-79.0, 2.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "biome-puna",
+        "name": "Puna y Altiplano Andino",
+        "code": "PUN",
+        "color": "#F59E0B",
+        "climate": "Frío de montaña y árido de altura (ET / BSk)",
+        "altitude": "3.500 - 4.800 m.s.n.m.",
+        "acoustic": "Vientos de gran velocidad, aire enrarecido y vastas llanuras de altura rodeadas de cumbres; sonidos penetrantes que viajan largas distancias.",
+        "instruments": "Siku / Zampoña, Quena, Charango (con caparazón de quirquincho o madera de aliso), Tarkas, Bombo legüero, Chajchas.",
+        "musical_tradition": "Huayno, Sikuri comunitario, Tinku, Carnavalitos, coplas de altura y ceremonias a la Pachamama.",
+        "representative_countries": "Bolivia, Perú, Norte de Chile, Noroeste Argentino"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-71.5, -9.5],
+            [-68.0, -12.0],
+            [-65.0, -16.0],
+            [-64.5, -22.0],
+            [-66.0, -27.0],
+            [-69.5, -26.0],
+            [-70.0, -21.0],
+            [-72.0, -16.5],
+            [-71.5, -9.5]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "biome-atacama",
+        "name": "Desierto de Atacama y Costa Árida",
+        "code": "ATC",
+        "color": "#D97706",
+        "climate": "Hiperárido desértico costero (BWk / BWh)",
+        "altitude": "0 - 2.800 m.s.n.m.",
+        "acoustic": "Silencio absoluto interrumpido por rachas de viento termal y la camanchaca costera; resonancia seca y sin absorción vegetal.",
+        "instruments": "Bronces andinos (trompetas de bandas de cofradía), cajas chayeras, matracas de metal y madera, pitos ceremoniales.",
+        "musical_tradition": "Fiesta de La Tirana, cantos pampinos del salitre, trotes, cacharpayas y plegarias de promesantes.",
+        "representative_countries": "Chile, Sur del Perú"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-76.0, -14.0],
+            [-71.0, -17.0],
+            [-69.0, -20.0],
+            [-68.5, -25.5],
+            [-70.0, -28.0],
+            [-71.5, -27.0],
+            [-71.0, -20.0],
+            [-73.5, -16.0],
+            [-76.0, -14.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "biome-pampa",
+        "name": "Pampa Húmeda y Pastizales del Plata",
+        "code": "PMP",
+        "color": "#84CC16",
+        "climate": "Templado pampeano sin estación seca (Cfa)",
+        "altitude": "0 - 300 m.s.n.m.",
+        "acoustic": "Horizonte plano e infinito; propagación esférica uniforme del sonido sobre pastizales que facilita el canto a capela y la guitarra solista.",
+        "instruments": "Guitarra criolla española, acordeón verdulera, bombo criollo, guitarrón pampeano.",
+        "musical_tradition": "Milonga campera, payadas improvisadas, huella, triunfo, tango en el delta urbano y zambas pampeanas.",
+        "representative_countries": "Argentina, Uruguay, Sur de Brasil"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-64.0, -31.0],
+            [-59.0, -30.0],
+            [-54.0, -31.5],
+            [-52.0, -34.5],
+            [-57.0, -38.5],
+            [-62.0, -39.0],
+            [-65.0, -35.5],
+            [-64.0, -31.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "biome-valdiviano",
+        "name": "Bosque Templado Lluvioso y Canales Australes",
+        "code": "VLD",
+        "color": "#059669",
+        "climate": "Oceánico hiperhúmedo lluvioso (Cfb / Cfc)",
+        "altitude": "0 - 1.500 m.s.n.m.",
+        "acoustic": "Lluvia constante y goteo continuo sobre copas de laureles, coihues y alerces; rumor del oleaje en fiordos y canales.",
+        "instruments": "Acordeón de botones, rabel chilote, bombo chilote, trutruca mapuche, kultrún ceremonial, cascahuillas.",
+        "musical_tradition": "Cueca chilota, vals chilote, sirilla, cantos sagrados mapuche (Ülkantun), relatos de la Pincoya y el Trauco.",
+        "representative_countries": "Centro-Sur de Chile, Suroeste de Argentina"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-74.0, -38.0],
+            [-71.5, -38.0],
+            [-71.0, -44.0],
+            [-72.5, -48.0],
+            [-75.5, -48.0],
+            [-75.0, -42.0],
+            [-74.0, -38.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "biome-patagonia",
+        "name": "Estepa Patagónica y Mesetas Frías",
+        "code": "PAT",
+        "color": "#64748B",
+        "climate": "Frío semiárido y ventoso (BSk / BWk)",
+        "altitude": "200 - 1.200 m.s.n.m.",
+        "acoustic": "Bramido constante del viento patagónico que dispersa el eco; tonos graves y percutidos para resistir el ruido ambiental del viento.",
+        "instruments": "Koolo (arco musical tehuelche), guitarra española afinada por transporte, acordeón, kultrún.",
+        "musical_tradition": "Loncomeo, kaani (danza tehuelche), chorrillero, cantos de soledad de estancias ovejeras.",
+        "representative_countries": "Argentina, Chile austral"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-71.0, -40.0],
+            [-65.0, -41.0],
+            [-64.0, -48.0],
+            [-68.0, -53.0],
+            [-72.0, -53.0],
+            [-71.0, -47.0],
+            [-71.0, -40.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "biome-llanos",
+        "name": "Llanos del Orinoco (Sabana Inundable)",
+        "code": "LLN",
+        "color": "#EAB308",
+        "climate": "Tropical de sabana con estación seca y lluvias torrenciales (Aw)",
+        "altitude": "50 - 300 m.s.n.m.",
+        "acoustic": "Vastas llanuras abiertas con eco distante; canto potente de garganta abierta para comunicarse a través de esteros e inundaciones.",
+        "instruments": "Arpa llanera (sin pedales), cuatro venezolano, maracas de capacho, bandola llanera.",
+        "musical_tradition": "Joropo llanero, cantos de arreo y ordeño (Patrimonio Cultural Inmaterial UNESCO), tonadas de Simón Díaz, pasajes y golpes.",
+        "representative_countries": "Colombia, Venezuela"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-73.5, 4.0],
+            [-70.0, 7.5],
+            [-64.0, 8.5],
+            [-62.5, 7.0],
+            [-66.0, 4.5],
+            [-71.0, 3.0],
+            [-73.5, 4.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "biome-caribe",
+        "name": "Caribe, Depresión Momposina y Manglares",
+        "code": "CRB",
+        "color": "#06B6D4",
+        "climate": "Cálido caribeño y humedales de ciénaga (Aw / Am)",
+        "altitude": "0 - 200 m.s.n.m.",
+        "acoustic": "Resonancia cálida del agua en ciénagas y playas; rica polirritmia percutiva que dialoga con el batir del mar y las aves acuáticas.",
+        "instruments": "Tambora, llamador, alegre, gaitas hembra y macho de cardón, maracón, guache, marímbula caribeña.",
+        "musical_tradition": "Cumbia tradicional, bullerengue, son palenquero, chandé, porro y ritmos afroantillanos.",
+        "representative_countries": "Colombia, Cuba, Puerto Rico, República Dominicana, Panamá"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-77.0, 8.0],
+            [-75.0, 11.5],
+            [-71.0, 12.0],
+            [-72.0, 9.0],
+            [-74.5, 8.0],
+            [-77.0, 8.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "biome-chaco",
+        "name": "Gran Chaco y Espinal Seco",
+        "code": "CHK",
+        "color": "#A16207",
+        "climate": "Subtropical continental con marcada estación seca (Cwa / BSh)",
+        "altitude": "100 - 500 m.s.n.m.",
+        "acoustic": "Bosque xerófilo denso con quebrachos y algarrobos; resonancia densa de maderas duras ideales para instrumentos de cuerda y percusión.",
+        "instruments": "Violín sachero, bombo sachero, guitarra con rasgueo veloz, acordeón de dos hileras, moxeños.",
+        "musical_tradition": "Chacarera santiagueña, gato, zamba sachera, chamamé montaraz y cantos qom / wichí.",
+        "representative_countries": "Argentina, Paraguay, Bolivia"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-64.0, -18.0],
+            [-59.0, -19.0],
+            [-57.0, -25.0],
+            [-60.0, -30.0],
+            [-65.0, -29.0],
+            [-64.5, -23.0],
+            [-64.0, -18.0]
+          ]
+        ]
+      }
+    }
+  ]
+}
