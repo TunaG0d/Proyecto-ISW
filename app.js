@@ -1641,9 +1641,7 @@ function switchTab(tabId) {
     }
 }
 
-/* ==========================================================================
-   Formulario de Contribuciones (RS-02 MoSCoW: YouTube, Bioma, Geometría, Tags)
-   ========================================================================== */
+/* Formulario de Contribuciones (RS-02 MoSCoW: YouTube, Bioma, Geometría, Tags) */
 
 const songForm = document.getElementById('song-form');
 const formMessage = document.getElementById('form-message');
@@ -1768,9 +1766,7 @@ function updatePendingBadge() {
     if (countRejectedEl) countRejectedEl.textContent = songsDatabase.filter(s => s.status === 'rejected').length;
 }
 
-/* ==========================================================================
-   Módulo de Moderación / Validador (RS-03 MoSCoW: Validación de Contenido)
-   ========================================================================== */
+/* Módulo de Moderación / Validador (RS-03 MoSCoW: Validación de Contenido) */
 
 function initAdminFilterBar() {
     const filterTabs = document.querySelectorAll('.admin-tab-btn');
@@ -1888,9 +1884,7 @@ window.moderateSongAction = async (id, status) => {
     updatePendingBadge();
 };
 
-/* ==========================================================================
-   Reporte de Problemas (Modal)
-   ========================================================================== */
+/* Reporte de Problemas (Modal) */
 
 const reportModal = document.getElementById('report-modal');
 const reportForm = document.getElementById('report-form');
@@ -1960,9 +1954,7 @@ function closeReportModal() {
     reportFeedback.classList.add('hidden');
 }
 
-/* ==========================================================================
-   Arranque de la Aplicación
-   ========================================================================== */
+/* Arranque de la Aplicación */
 
 async function startApp() {
     if (window._atlasAppStarted) return;
